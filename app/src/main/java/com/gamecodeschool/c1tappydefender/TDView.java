@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.view.MotionEvent;
@@ -95,6 +94,12 @@ public class TDView extends SurfaceView implements Runnable {
             win = soundPool.load(context, R.raw.win, 1);
             destroyed = soundPool.load(context, R.raw.destroyed, 1);
             bump = soundPool.load(context, R.raw.bump, 1);
+        }else {
+            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC,1);
+            start = soundPool.load(context,R.raw.start,1);
+            win = soundPool.load(context, R.raw.win, 1);
+            destroyed = soundPool.load(context, R.raw.destroyed, 1);
+            bump = soundPool.load(context, R.raw.bump, 1);
         }
     }
 
@@ -125,8 +130,6 @@ public class TDView extends SurfaceView implements Runnable {
 
     private void startGame() {
 
-        soundPool.play(start, 1, 1, 0, 0, 1);
-
         player = new PlayerShip(context, screenX, screenY);
         enemy1 = new EnemyShip(context, screenX, screenY);
         enemy2 = new EnemyShip(context, screenX, screenY);
@@ -153,6 +156,8 @@ public class TDView extends SurfaceView implements Runnable {
         timeStarted = System.currentTimeMillis();
 
         gameEnded = false;
+
+        soundPool.play(start, 1, 1, 0, 0, 1);
     }
 
     public void pause() {
@@ -210,7 +215,7 @@ public class TDView extends SurfaceView implements Runnable {
                 paint.setTextAlign(Paint.Align.LEFT);
                 paint.setColor(Color.argb(255, 255, 255, 255));
                 paint.setTextSize(25);
-                canvas.drawText("Fastest: " + fastestTime + "s", 10, 20, paint);
+                canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", 10, 20, paint);
                 canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 20, paint);
                 canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM",
                         screenX / 3, screenY - 20, paint);
@@ -223,7 +228,7 @@ public class TDView extends SurfaceView implements Runnable {
                 paint.setTextAlign(Paint.Align.CENTER);
                 canvas.drawText("Game Over", screenX / 2, 100, paint);
                 paint.setTextSize(25);
-                canvas.drawText("Fastest: " + fastestTime + "s", screenX / 2, 160, paint);
+                canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", screenX / 2, 160, paint);
                 canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 200, paint);
                 canvas.drawText("Distance Remainig: " + distanceRemaining / 1000 + "KM", screenX / 2, 240, paint);
 

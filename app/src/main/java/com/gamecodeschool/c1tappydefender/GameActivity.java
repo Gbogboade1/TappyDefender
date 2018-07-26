@@ -2,9 +2,9 @@ package com.gamecodeschool.c1tappydefender;
 
 import android.app.Activity;
 import android.graphics.Point;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.KeyEvent;
 
 public class GameActivity extends Activity {
 
@@ -33,5 +33,14 @@ public class GameActivity extends Activity {
     protected void onResume() {
         super.onResume();
         gameView.resume();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            finish();
+            return true;
+        }
+        return false;
     }
 }
