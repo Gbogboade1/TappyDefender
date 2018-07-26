@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Tappy Defender</string>
+    <string name="fastest_time">Fastest time: %d</string>
+    <string name="play">Play</string>
+</resources>
